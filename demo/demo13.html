@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js 组件</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <!-- 组件（Component）是 Vue.js 最强大的功能之一。
+    组件可以扩展 HTML 元素，封装可重用的代码。
+    组件系统让我们可以用独立可复用的小组件来构建大型应用，几乎任意类型的应用的界面都可以抽象为一个组件树 -->
+    <!-- 注册一个全局组件语法格式如下： -->
+    <!-- Vue.component(tagName, options) -->
+    <!-- tagName 为组件名，options 为配置选项。注册后，我们可以使用以下方式来调用组件： -->
+    <!-- <tagName></tagName> -->
+    <!-- 全局组件
+    所有实例都能用全局组件。 -->
+    <div id="app-1">
+        <baidu></baidu>
+    </div>
+    <script>
+        //注册
+        Vue.component('baidu', {
+            template: '<h1>自义定组件</h1>'
+        })
+        //创建实例
+        new Vue({
+            el: '#app-1'
+        })
+    </script>
+    <!-- 局部组件
+    我们也可以在实例选项中注册局部组件，这样组件只能在这个实例中使用：
+    局部组件实例
+    注册一个简单的局部组件 baidu，并使用它： -->
+    <div id="app-2">
+        <baidu></baidu>
+    </div>
+    <script>
+        var Child = {
+            template: '<h1>自义定组件</h1>'
+        }
+        //创建实例
+        new Vue({
+            el: '#app-2',
+            component: {
+                //<baidu>将在父模板可用
+                'baidu': Child
+            }
+        })
+    </script>
+    <!-- Prop
+    prop 是父组件用来传递数据的一个自定义属性。
+    父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 "prop"：
+    Prop 实例 -->
+    <div id="app-3">
+        <child message="hello!"></child>
+    </div>
+    <script>
+        //注册
+        Vue.component('child', {
+            //声明props
+            props: ['message'],
+            //同样也可以在vm实例中像"this.nessage"这样使用
+            template: '<span>{{message}}</span>'
+        })
+        //创建实例
+        new Vue({
+            el: '#app-3'
+        })
+    </script>
+    <!-- 动态 Prop
+    类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件： -->
+    <br>
+    <div id="app-4">
+        <div>
+            <input v-model="parentMsg">
+            <br>
+            <child v-bind:message="parentMsg"></child>
+        </div>
+    </div>
+    <script>
+        //注册
+        Vue.component('child', {
+            //声明props
+            props: ['message'],
+            //同样也可以在vm实例中像"this.nessage"这样使用
+            template: '<span>{{message}}</span>'
+        })
+        //创建实例
+        new Vue({
+            el: '#app-4',
+            data: {
+                parentMsg: '父组件内容'
+            }
+        })
+    </script>
+    <div id="app-5">
+        <ol>
+            <todo-item v-for="item in sites" v-bind:todo="item"></todo-item>
+        </ol>
+    </div>
+    <script>
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+        new Vue({
+            el: '#app-5',
+            data: {
+                sites: [{
+                        text: 'baidu'
+                    },
+                    {
+                        text: 'taobao'
+                    },
+                    {
+                        text: 'google'
+                    }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>

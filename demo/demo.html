@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue demo</title>
+    <style>
+        #app-2,
+        #app-3,
+        #app-4,
+        #app-5,
+        #app-6,
+        #app-7,
+        #app-8,
+        #app-9,
+        #app-10,
+        #app-11,
+        #app-12,
+        #app-13,
+        #app-14,
+        #app-15,
+        #app-16 {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'hellow vue.js!'
+            }
+        })
+    </script>
+    <div id="app-2">
+        <span v-bind:title="message">
+            鼠标悬停几秒查看此处动态信息！
+        </span>
+    </div>
+    <script>
+        var app2 = new Vue({
+            el: '#app-2',
+            data: {
+                message: '页面加载于' + new Date().toLocaleString()
+            }
+        })
+    </script>
+    <!-- v-if条件语句 -->
+    <div id="app-3">
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+    <script>
+        var app3 = new Vue({
+            el: '#app-3',
+            data: {
+                seen: true //为false时不显示内容
+            }
+        })
+    </script>
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+    <script>
+        var app4 = new Vue({
+            el: '#app-4',
+            data: {
+                todos: [{
+                        text: '学习 JavaScript'
+                    },
+                    {
+                        text: '学习 Vue'
+                    },
+                    {
+                        text: '整个项目'
+                    },
+                ]
+            }
+        })
+    </script>
+    <div id="app-5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+    </div>
+    <script>
+        var app5 = new Vue({
+            el: '#app-5',
+            data: {
+                message: 'hello vue.js!'
+            },
+            methods: {
+                reverseMessage: function () {
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+    <div id="app-6">
+        <label>请输入姓名：<input v-model="message"></label>
+        <p>欢迎{{message}}</p>
+    </div>
+    <script>
+        var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                message: 'hello vue'
+            }
+        })
+    </script>
+    <div id="app-7">
+        <ol>
+            <todo-item v-for="item in grocerList" v-bind:todo="item" v-bind:key="item.id">
+            </todo-item>
+        </ol>
+    </div>
+    <script>
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+        var app7 = new Vue({
+            el: '#app-7',
+            data: {
+                grocerList: [{
+                        id: 0,
+                        text: '蔬菜'
+                    },
+                    {
+                        id: 1,
+                        text: '奶酪'
+                    },
+                    {
+                        id: 2,
+                        text: '随便其他什么人吃的东西'
+                    },
+                ]
+            }
+        })
+    </script>
+    <!-- v-else条件语句 -->
+    <div id="app-8">
+        <div v-if="Math.random()>0.5">
+            sorry
+        </div>
+        <div v-else>
+            not sorry
+        </div>
+    </div>
+    <script>
+        var app8 = new Vue({
+            el: '#app-8'
+        })
+        console.log(Math.random()); //打印随机数
+    </script>
+    <!-- v-else-if条件语句 -->
+    <div id="app-9">
+        <div v-if="type==='A'">A</div>
+        <div v-else-if="type==='B'">B</div>
+        <div v-else-if="type==='C'">C</div>
+        <div v-else>not A/B/C</div>
+    </div>
+    <script>
+        var app9 = new Vue({
+            el: '#app-9',
+            data: {
+                type: 'C'
+            }
+        })
+    </script>
+    <div id="app-10">
+        <h1 v-show="ok">hello</h1>
+    </div>
+    <script>
+        var app10 = new Vue({
+            el: '#app-10',
+            data: {
+                ok: true
+            }
+        })
+    </script>
+    <!-- vue.js循环语句
+    循环使用 v-for 指令。
+    v-for 指令需要以 site in sites 形式的特殊语法， sites 是源数据数组并且 site 是数组元素迭代的别名。
+    v-for 可以绑定数据到数组来渲染一个列表： -->
+    <div id="app-11">
+        <ol>
+            <li v-for="site in sites">{{site.name}}</li>
+        </ol>
+    </div>
+    <script>
+        var app11 = new Vue({
+            el: '#app-11',
+            data: {
+                sites: [{
+                        name: 'Runoob'
+                    },
+                    {
+                        name: 'Google'
+                    },
+                    {
+                        name: 'Taobao'
+                    }
+                ]
+            }
+        })
+    </script>
+    <div id="app-12">
+        <ul>
+            <template v-for="site in sites">
+                <li>{{site.name}}</li>
+                <li>--------------</li>
+            </template>
+        </ul>
+    </div>
+    <script>
+        var app12 = new Vue({
+            el: '#app-12',
+            data: {
+                sites: [{
+                        name: 'Runoob'
+                    },
+                    {
+                        name: 'Google'
+                    },
+                    {
+                        name: 'Taobao'
+                    }
+                ]
+            }
+        })
+    </script>
+    <!-- v-for 迭代对象
+    v-for 可以通过一个对象的属性来迭代数据： -->
+    <div id="app-13">
+        <ul>
+            <li v-for="value in object">{{value}}</li>
+        </ul>
+    </div>
+    <script>
+        var app13 = new Vue({
+            el: '#app-13',
+            data: {
+                object: {
+                    name: '菜鸟教程',
+                    url: 'http://www.runoob.com',
+                    slogan: '学的不仅是技术，更是梦想！'
+                }
+            }
+        })
+    </script>
+    <div id="app-14">
+        <ul>
+            <li v-for="(value,key) in object">{{key}}:{{value}}</li>
+        </ul>
+    </div>
+    <script>
+        var app14 = new Vue({
+            el: '#app-14',
+            data: {
+                object: {
+                    name: '菜鸟教程',
+                    url: 'http://www.runoob.com',
+                    slogan: '学的不仅是技术，更是梦想！'
+                }
+            }
+        })
+    </script>
+    <div id="app-15">
+        <ul>
+            <li v-for="(value,key,index) in object">{{index}}:{{key}}:{{value}}</li>
+        </ul>
+    </div>
+    <script>
+        var app14 = new Vue({
+            el: '#app-15',
+            data: {
+                object: {
+                    name: '菜鸟教程',
+                    url: 'http://www.runoob.com',
+                    slogan: '学的不仅是技术，更是梦想！'
+                }
+            }
+        })
+    </script>
+    <!-- v-for 迭代整数
+    v-for 也可以循环整数 -->
+    <div id="app-16">
+        <ul>
+            <li v-for="n in 10">{{n}}</li>
+        </ul>
+    </div>
+    <script>
+        var app16 = new Vue({
+            el: '#app-16'
+        })
+    </script>
+    <!-- Vue.js 计算属性
+    计算属性关键词: computed。
+    计算属性在处理一些复杂逻辑时是很有用的。
+    可以看下以下反转字符串的例子： -->
+    <div id="app-17">
+        {{message.split('').reverse().join('')}}
+    </div>
+    <script>
+        var app17 = new Vue({
+            el: '#app-17',
+            data: {
+                message: 'Runoob!'
+            }
+        })
+    </script>
+    <!-- 计算属性的实例： -->
+    <!-- 实例中声明了一个计算属性 reversedMessage 。
+    提供的函数将用作属性 app20.reversedMessage 的 getter 。
+    app20.reversedMessage 依赖于 app20.message，在 app20.message 发生改变时，app20.reversedMessage 也会更新。    -->
+    <div id="app-18">
+        <p>原始字符串：{{message}}</p>
+        <p>计算后反转字符串：{{reversedMessage}}</p>
+    </div>
+    <script>
+        var app18 = new Vue({
+            el: '#app-18',
+            data: {
+                message: 'Runoob!'
+            },
+            computed: {
+                //计算属性的getter
+                reversedMessage: function () {
+                    // `this` 指向 app20 实例
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+    <!-- computed vs methods
+    我们可以使用 methods 来替代 computed，效果上两个都是一样的，但是 computed 是基于它的依赖缓存，只有相关依赖发生改变时才会重新取值。而使用 methods ，在重新渲染的时候，函数总会重新调用执行。 -->
+    <!-- 可以说使用 computed 性能会更好，但是如果你不希望缓存，你可以使用 methods 属性。 -->
+    <div id="app-19">
+        <p>原始字符串：{{message}}</p>
+        <p>计算后反转字符串：{{reversedMessage}}</p>
+        <p>使用方法后反转字符串：{{reversedMessage2()}}</p>
+    </div>
+    <script>
+        var app18 = new Vue({
+            el: '#app-19',
+            data: {
+                message: 'Runoob!'
+            },
+            computed: {
+                //计算属性的getter
+                reversedMessage: function () {
+                    // `this` 指向 app20 实例
+                    return this.message.split('').reverse().join('')
+                }
+            },
+            methods:{
+                reversedMessage2:function(){
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+    </script>
+    <!-- computed setter
+    computed 属性默认只有 getter ，不过在需要时你也可以提供一个 setter ： -->
+    <div id="app-20">
+        <p>{{site}}</p>
+    </div>
+    <script>
+    var app20=new Vue({
+        el:'#app-20',
+        data:{
+            neme:'baidu',
+            url:'http://www.baidu.com'
+        },
+        computed:{
+            site:{
+                //getter
+                get:function(){
+                    return this.name+' '+this.url
+                },
+                //setter
+                set:function(newValue){
+                    var names=newValue.split(' ')
+                    this.name=names[0]
+                    this.url=names[names.length-1]
+                }
+            }
+        }
+    })
+    //调用 setter， app20.name 和 app20.url 也会被对应更新
+    app20.site='菜鸟教程http://www.runoob.com';
+    document.write('name:'+app20.name);
+    document.write('<br>');
+    document.write('url:'+app20.url);
+    </script>
+</body>
+</html>

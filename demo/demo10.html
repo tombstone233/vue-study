@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js style(内联样式)</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:style="[baseStyles,overridingStyles]">tombstone233</div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                baseStyles: {
+                    color: 'green',
+                    'font-size': '30px'
+                    //不能有-，CSS写法加单引号，否则驼峰式命名
+                },
+                overridingStyles: {
+                    fontWeight: 'bold'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
